@@ -317,6 +317,8 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 			theta += thetaDelta;
 			phi += phiDelta;
+			scope.theta = theta
+			scope.phi = phi
 
 			// restrict phi to be between desired limits
 			phi = Math.max( this.minPolarAngle, Math.min( this.maxPolarAngle, phi ) );
@@ -369,6 +371,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 		else if ( scale != 1 ) {
 
 			offset.copy( position ).sub( this.target );
+			scope.offset = offset
 
 			offset.multiplyScalar( scale );
 			position.copy( this.target ).add( offset );

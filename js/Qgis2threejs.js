@@ -374,6 +374,9 @@ limitations:
   app.animate = function () {
     if (app.running) requestAnimationFrame(app.animate);
     if (app.controls) app.controls.update();
+    if (typeof userAnimateFunction != 'undefined') {
+      userAnimateFunction()
+    }
     app.render();
   };
 
