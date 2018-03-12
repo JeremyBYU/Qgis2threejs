@@ -2378,7 +2378,7 @@ Q3D.Utils.createOverlayGeometry = function (triangles, polygons, zFunc) {
     }
 
     // triangulate polygon
-    var faces = THREE.Shape.Utils.triangulateShape(poly_geom.vertices, holes);
+    var faces = THREE.ShapeUtils.triangulateShape(poly_geom.vertices, holes);
 
     // append points of holes to vertices
     for (var j = 0, m = holes.length; j < m; j++) {
