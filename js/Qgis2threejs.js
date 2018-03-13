@@ -592,7 +592,9 @@ limitations:
     if (typeof proj4 === "undefined") r.push([pt.x.toFixed(2), pt.y.toFixed(2), pt.z.toFixed(2)].join(", "));
     else {
       var lonLat = proj4(app.project.proj).inverse([pt.x, pt.y]);
-      r.push(Q3D.Utils.convertToDMS(lonLat[1], lonLat[0]) + ", Elev. " + pt.z.toFixed(2));
+      r.push(`GPS: ${lonLat[1].toFixed(4)}, ${lonLat[0].toFixed(4)}, Elev. ${pt.z.toFixed(2)} `);
+      r.push(`</td></tr><tr><td>Projected: ${[pt.x.toFixed(2), pt.y.toFixed(2), pt.z.toFixed(2)].join(", ")}`);
+      r.push(`</td></tr><tr><td>ThreeJS: ${[point.x.toFixed(2), point.y.toFixed(2), point.z.toFixed(2)].join(", ")}`);
     }
 
     r.push("</td></tr></table>");
