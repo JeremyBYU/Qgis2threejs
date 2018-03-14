@@ -116,6 +116,17 @@ Q3D.Project.prototype = {
     return {x: x / this.scale + this.origin.x,
             y: y / this.scale + this.origin.y,
             z: z / this.zScale + this.origin.z};
+  },
+
+  toThreeJSCoordinates: function (x, y, z) {
+    // if (this.rotation) {
+    //   var pt = this._rotatePoint({x: x, y: y}, this.rotation);
+    //   x = pt.x;
+    //   y = pt.y;
+    // }
+    return {x: (x -  this.origin.x) * this.scale,
+            y: (y -  this.origin.y) * this.scale,
+            z: (z -  this.origin.z) * this.zScale};
   }
 
   // buildCustomLights: function (parent) {},
@@ -266,7 +277,7 @@ limitations:
     // create a marker for queried point
     var opt = Q3D.Options.qmarker;
     app.queryMarker = new THREE.Mesh(new THREE.SphereGeometry(opt.r),
-                                      new THREE.MeshLambertMaterial({color: opt.c, ambient: opt.c, opacity: opt.o, transparent: (opt.o < 1)}));
+                                      new THREE.MeshLambertMaterial({color: opt.c, opacity: opt.o, transparent: (opt.o < 1)}));
     app.queryMarker.visible = false;
     app.scene.add(app.queryMarker);
 
@@ -1254,11 +1265,11 @@ Q3D.MapLayer.prototype = {
       if (m.w) opt.wireframe = true;
 
       if (m.type == Q3D.MaterialType.MeshLambert) {
-        if (m.c !== undefined) opt.color = opt.ambient = m.c;
+        if (m.c !== undefined) opt.color = m.c;
         mat = new THREE.MeshLambertMaterial(opt);
       }
       else if (m.type == Q3D.MaterialType.MeshPhong) {
-        if (m.c !== undefined) opt.color = opt.ambient = m.c;
+        if (m.c !== undefined) opt.color = m.c;
         mat = new THREE.MeshPhongMaterial(opt);
       }
       else if (m.type == Q3D.MaterialType.LineBasic) {
@@ -1342,7 +1353,6 @@ Q3D.DEMLayer.prototype.build = function (parent) {
       var opacity = this.materials[block.m].o;
       if (opacity === undefined) opacity = 1;
       var mat = new THREE.MeshLambertMaterial({color: opt.side.color,
-                                               ambient: opt.side.color,
                                                opacity: opacity,
                                                transparent: (opacity < 1)});
       this.materials.push({type: Q3D.MaterialType.MeshLambert, m: mat});
